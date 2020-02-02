@@ -2,7 +2,7 @@ const express = require('express');
 
 const server = express();
 
-server.get('/api', (req, res) => {
+server.get('/', (req, res) => {
     res.send('Save the Animals Api')
 })
 
