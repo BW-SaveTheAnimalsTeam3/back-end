@@ -71,5 +71,9 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
-  return knex.schema.dropTableIfExists();
+  return knex.schema.dropTableIfExists('donations')
+            .dropTableIfExists('photos')
+            .dropTableIfExists('campaigns')
+            .dropTableIfExists('organizations')
+            .dropTableIfExists('users');
 };
