@@ -19,6 +19,29 @@ exports.up = function(knex) {
             .references('user_id')
             .inTable('users');
     })
+    .createTable('campaigns', tbl => {
+        tbl.increments('campaign_id');
+        tbl.integer('org_id')
+            .unsigned()
+            .notNullable()
+            .references('org_id')
+            .inTable('organizations');
+        tbl.string('campaign')
+            .notNullable()
+            .unique();
+        tbl.string('location')
+            .notNullable();
+        tbl.text('description')
+            .notNullable()
+        tbl.string('species')
+            .notNullable();
+        tbl.string('urgency_level')
+            .notNullable();
+        tbl.integer('funding_goal')
+            .notNullable();
+        tbl.date('deadline')
+            .notNullable();
+    })
 };
 
 exports.down = function(knex) {
