@@ -17,7 +17,9 @@ exports.up = function(knex) {
             .unsigned()
             .notNullable()
             .references('user_id')
-            .inTable('users');
+            .inTable('users')
+            .onDelete('RESTRICT')
+            .onUpdate('CASCADE');
     })
     .createTable('campaigns', tbl => {
         tbl.increments('campaign_id');
@@ -25,7 +27,9 @@ exports.up = function(knex) {
             .unsigned()
             .notNullable()
             .references('org_id')
-            .inTable('organizations');
+            .inTable('organizations')
+            .onDelete('RESTRICT')
+            .onUpdate('CASCADE');
         tbl.string('campaign')
             .notNullable()
             .unique();
@@ -53,18 +57,26 @@ exports.up = function(knex) {
             .unsigned()
             .notNullable()
             .references('campaign_id')
-            .inTable('campaigns');
+            .inTable('campaigns')
+            .onDelete('RESTRICT')
+            .onUpdate('CASCADE');
     })
     .createTable('donations', tbl => {
         tbl.increments('donation_id');
         tbl.integer('user_id')
             .unsigned()
             .notNullable()
-            .references('user_id').inTable('users')
+            .references('user_id')
+            .inTable('users')
+            .onDelete('RESTRICT')
+            .onUpdate('CASCADE')
         tbl.integer('campaign_id')
             .unsigned()
             .notNullable()
-            .references('campaign_id').inTable('campaigns')
+            .references('campaign_id')
+            .inTable('campaigns')
+            .onDelete('RESTRICT')
+            .onUpdate('CASCADE')
         tbl.integer('donation_amount')
             .notNullable()
     })
