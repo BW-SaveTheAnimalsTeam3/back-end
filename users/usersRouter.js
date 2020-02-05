@@ -30,7 +30,9 @@ router.post('/register/organizations', (req, res) => {
     if (orgCreds.org_name && orgCreds.user_id){
         users.addOrg(orgCreds)
             .then(newOrg => {
-                res.status(201).json(newOrg);
+                const token = generateToken(newOrg);
+
+                res.status(201).json({ token, org_id: newOrg});
             })
             .catch(error => {
                 res.status(500).json(error);
@@ -47,7 +49,7 @@ router.post('/login', (req, res) => {
         .first()
         .then(user => {
             if (user && bcrypt.compareSync(password, user.password)){
-                const token = generateToken(user)
+                const token = generateToken(user.id)
 
                 res.status(200).json({message: `Welcome ${user.username}!`, token, id: user.id });
             } else {
@@ -59,10 +61,9 @@ router.post('/login', (req, res) => {
         });
 })
 
-function generateToken(user){
+function generateToken(id){
     const payload = {
-        subject: user.id,
-        username: user.username,
+        subject: id,
     };
     const secret = 'Secret sauce';
     const options = {
