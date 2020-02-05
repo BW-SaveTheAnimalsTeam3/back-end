@@ -61,6 +61,28 @@ router.post('/login', (req, res) => {
         });
 })
 
+router.get('/', (req, res) => {
+    users.findAll()
+        .then(users => {
+            res.status(200).json(users);
+        })
+        .catch(error => {
+            res.status(500).json({ message: 'Failed to get users'})
+        })
+})
+
+router.get('/organizations/:id', (req, res) => {
+    const id = req.params.id
+
+    users.findOrgById(id)
+        .then(org => {
+            res.status(201).json(org)
+        })
+        .catch(error => {
+            res.status(500).json(error)
+        })
+})
+
 function generateToken(id){
     const payload = {
         subject: id,
@@ -72,15 +94,5 @@ function generateToken(id){
 
     return jwt.sign(payload, secret, options)
 }
-
-router.get('/', (req, res) => {
-    users.findAll()
-        .then(users => {
-            res.status(200).json(users);
-        })
-        .catch(error => {
-            res.status(500).json({ message: 'Failed to get users'})
-        })
-})
 
 module.exports = router;
