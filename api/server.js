@@ -4,6 +4,7 @@ const cors = require('cors');
 
 const usersRouter = require('../users/usersRouter.js')
 const campaignsRouter = require('../campaigns/campaignsRouter.js')
+const donationsRouter = require('../donations/donationsRouter.js')
 
 const server = express();
 
@@ -17,5 +18,6 @@ server.get('/', (req, res) => {
 
 server.use('/api/users', usersRouter)
 server.use('/api/campaigns', campaignsRouter)
+server.use('/api/donations', donationsRouter)
 
 module.exports = server;
