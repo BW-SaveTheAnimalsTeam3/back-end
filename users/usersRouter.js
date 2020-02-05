@@ -14,11 +14,13 @@ router.post('/register', (req, res) => {
     if (creds.username && creds.password){
         users.add(creds)
             .then(newUser => {
-            res.status(201).json(newUser);
-            })
-            .catch(error => {
-                res.status(500).json(error);
-            })
+                const token = generateToken(newUser)
+
+                res.status(201).json({token, user_id: newUser});
+                })
+                .catch(error => {
+                    res.status(500).json(error);
+                })
     } else {
         res.status(400).json({ errorMessage: 'username and password are required'})
     }
@@ -30,9 +32,9 @@ router.post('/register/organizations', (req, res) => {
     if (orgCreds.org_name && orgCreds.user_id){
         users.addOrg(orgCreds)
             .then(newOrg => {
-                const token = generateToken(newOrg);
+                ;
 
-                res.status(201).json({ token, org_id: newOrg});
+                res.status(201).json({org_id: newOrg});
             })
             .catch(error => {
                 res.status(500).json(error);
