@@ -32,8 +32,6 @@ router.post('/register/organizations', (req, res) => {
     if (orgCreds.org_name && orgCreds.user_id){
         users.addOrg(orgCreds)
             .then(newOrg => {
-                ;
-
                 res.status(201).json({org_id: newOrg});
             })
             .catch(error => {
