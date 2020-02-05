@@ -16,4 +16,14 @@ router.post('/', (req, res) => {
         })
 })
 
+router.get('/', (req, res) => {
+    donations.findAll()
+        .then(donations => {
+            res.status(201).json(donations)
+        })
+        .catch(error => {
+            res.status(500).json(error)
+        })
+})
+
 modules.export = router
