@@ -1,23 +1,27 @@
 const bcrypt = require('bcryptjs');
 const express = require('express');
-
+const users = require('./usersModel.js');
 const router = express.Router();
 
-const users = require('./usersModel.js');
 
-router.post('/createNewUser', (req, res) => {
-    // let user = req.body;
 
-    // const hash = bcrypt.hashSync(user.password, 12);
-    // user.password = hash;
+router.post('/register', (req, res) => {
+    const creds = req.body;
 
-    users.addUser(req.body)
-        .then(newUser => {
+    // const hash = bcrypt.hashSync(creds.password, 12);
+    // creds.password = hash;
+    if (creds.username && creds.password){
+        users.add(creds)
+            .then(newUser => {
             res.status(201).json(newUser);
-        })
-        .catch(error => {
-            res.status(500).json(error);
-        })
+            })
+            .catch(error => {
+                res.status(500).json(error);
+            })
+    } else {
+        res.status(400).json({ errorMessage: 'username and password are required'})
+    }
+    
 })
 
 router.get('/', (req, res) => {

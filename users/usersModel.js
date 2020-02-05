@@ -1,12 +1,12 @@
 const db = require('../data/dbConfig.js')
 
 module.exports = {
-    addUser,
+    add,
     addOrg,
     findUsers
 }
 
-function addUser(creds) {
+function add(creds) {
     return db('users').insert(creds)
 }
 
