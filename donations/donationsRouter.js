@@ -38,5 +38,15 @@ router.get('/user/:id', (req, res) => {
         })
 })
 
+router.get('/campaigns/:id', (req, res) => {
+    const id = req.params.id
 
+    donations.findByCampaign(id)
+        .then(donations => {
+            res.status(201).json(donations)
+        })
+        .catch(error => {
+            res.status(500).json(error)
+        })
+})
 module.exports = router
