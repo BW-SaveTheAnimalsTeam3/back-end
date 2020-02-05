@@ -12,7 +12,7 @@ function add(creds) {
 }
 
 function addOrg(orgCreds){
-    return db('organizations').insert(orgCreds)
+    return db('organizations').insert(orgCreds, "id")
 }
 
 function findAll(){
