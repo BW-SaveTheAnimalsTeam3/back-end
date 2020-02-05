@@ -26,7 +26,19 @@ router.get('/', (req, res) => {
         })
 })
 
-router.get('/user/:id', (req, res) => {
+router.get('/:id', (req, res) => {
+    const id = req.params.id
+    
+    donations.findById(id)
+        .then(donation => {
+            res.status(201).json(donation)
+        })
+        .catch(error => {
+            res.status(500).json(error)
+        })
+})
+
+router.get('/users/:id', (req, res) => {
     const id = req.params.id
     
     donations.findByUser(id)

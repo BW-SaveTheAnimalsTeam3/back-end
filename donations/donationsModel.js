@@ -4,7 +4,8 @@ module.exports = {
     add,
     findByCampaign,
     findByUser,
-    findAll
+    findAll,
+    findById
 }
 
 function add(details){
@@ -21,4 +22,8 @@ function findByUser(id){
 
 function findAll(){
     return db('donations')
+}
+
+function findById(id){
+    return db('donations').where({id})
 }
