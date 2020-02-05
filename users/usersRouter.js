@@ -61,7 +61,7 @@ router.post('/login', (req, res) => {
 
 function generateToken(user){
     const payload = {
-        subject: user.user_id,
+        subject: user.id,
         username: user.username,
     };
     const secret = 'Secret sauce';
