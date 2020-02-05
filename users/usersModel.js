@@ -8,7 +8,7 @@ module.exports = {
 }
 
 function add(creds) {
-    return db('users').insert(creds)
+    return db('users').insert(creds, "id")
 }
 
 function addOrg(orgCreds){
