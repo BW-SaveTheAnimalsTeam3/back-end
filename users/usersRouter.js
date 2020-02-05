@@ -83,6 +83,30 @@ router.get('/organizations/:id', (req, res) => {
         })
 })
 
+router.delete('/:id', (req, res) => {
+    const id = req.params.id
+    
+    users.removeUser(id)
+        .then(delUser =>{
+            res.status(200).json(delUser)
+        })
+        .catch(error => {
+            res.status(500).json({ errorMessage: 'Could not delete user'})
+        })
+})
+
+router.delete('/organizations/:id', (req, res) => {
+    const id = req.params.id
+    
+    users.removeOrg(id)
+        .then(delOrg =>{
+            res.status(200).json(delOrg)
+        })
+        .catch(error => {
+            res.status(500).json({ errorMessage: 'Could not delete organization'})
+        })
+})
+
 function generateToken(id){
     const payload = {
         subject: id,
