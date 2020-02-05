@@ -3,17 +3,15 @@ const express = require('express');
 
 const router = express.Router();
 
-const db = require('../data/dbConfig.js');
-
 const users = require('./usersModel.js');
 
-router.post('/', (req, res) => {
-    let user = req.body;
+router.post('/createNewUser', (req, res) => {
+    // let user = req.body;
 
     // const hash = bcrypt.hashSync(user.password, 12);
     // user.password = hash;
 
-    users.addUser(user)
+    users.addUser(req.body)
         .then(newUser => {
             res.status(201).json(newUser);
         })
