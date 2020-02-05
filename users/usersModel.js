@@ -1,8 +1,9 @@
-const db = require('../data/dbConfig')
+const db = require('../data/dbConfig.js')
 
 module.exports = {
     addUser,
-    addOrg
+    addOrg,
+    findUsers
 }
 
 function addUser(creds) {
@@ -11,4 +12,8 @@ function addUser(creds) {
 
 function addOrg(orgCreds){
     return db('organizations').insert(orgCreds)
+}
+
+function findUsers(){
+    return db('users')
 }
