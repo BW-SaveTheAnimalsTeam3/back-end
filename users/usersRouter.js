@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const users = require('./usersModel.js');
 const router = express.Router();
 
@@ -8,8 +9,8 @@ const router = express.Router();
 router.post('/register', (req, res) => {
     const creds = req.body;
 
-    // const hash = bcrypt.hashSync(creds.password, 12);
-    // creds.password = hash;
+    const hash = bcrypt.hashSync(creds.password, 12);
+    creds.password = hash;
     if (creds.username && creds.password){
         users.add(creds)
             .then(newUser => {
@@ -24,8 +25,25 @@ router.post('/register', (req, res) => {
     
 })
 
+router.post('/login', (req, res) => {
+    let {username, password} = req.body;
+
+    users.findBy({username})
+        .first()
+        .then(user => {
+            if (user && bcrypt.compareSync(password, user.password)){
+                res.status(200).json({message: `Welcome ${user.username}!`});
+            } else {
+                res.status(401).json({message: 'Invalid Credentials'})
+            }
+        })
+        .catch(error => {
+            res.status(500).json(error);
+        });
+})
+
 router.get('/', (req, res) => {
-    users.findUsers()
+    users.findAll()
         .then(users => {
             res.status(200).json(users);
         })
