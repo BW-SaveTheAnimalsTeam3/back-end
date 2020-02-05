@@ -71,6 +71,16 @@ router.get('/', (req, res) => {
         })
 })
 
+router.get('/organizations/', (req, res) => {
+    users.findAllOrgs()
+        .then(orgs => {
+            res.status(200).json(orgs);
+        })
+        .catch(error => {
+            res.status(500).json({ message: 'Failed to get orgs'})
+        })
+})
+
 router.get('/organizations/:id', (req, res) => {
     const id = req.params.id
 
