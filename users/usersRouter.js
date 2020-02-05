@@ -22,7 +22,22 @@ router.post('/register', (req, res) => {
     } else {
         res.status(400).json({ errorMessage: 'username and password are required'})
     }
-    
+})
+
+router.post('/register/organizations', (req, res) => {
+    const orgCreds = req.body;
+
+    if (orgCreds.org_name && orgCreds.user_id){
+        users.addOrg(orgCreds)
+            .then(newOrg => {
+                res.status(201).json(newOrg);
+            })
+            .catch(error => {
+                res.status(500).json(error);
+            })
+    } else {
+        res.status(400).json({errorMessage: 'organization name and user_id are required'})
+    }
 })
 
 router.post('/login', (req, res) => {

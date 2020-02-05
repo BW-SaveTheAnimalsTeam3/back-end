@@ -1,7 +1,7 @@
 
 exports.up = function(knex) {
   return knex.schema.createTable('users', tbl => {
-        tbl.increments('user_id');
+        tbl.increments();
         tbl.string('username')
             .notNullable()
             .unique();
@@ -9,24 +9,24 @@ exports.up = function(knex) {
             .notNullable()
     })
     .createTable('organizations', tbl => {
-        tbl.increments('org_id');
+        tbl.increments();
         tbl.string('org_name')
             .notNullable()
             .unique();
         tbl.integer('user_id')
             .unsigned()
             .notNullable()
-            .references('user_id')
+            .references('id')
             .inTable('users')
             .onDelete('RESTRICT')
             .onUpdate('CASCADE');
     })
     .createTable('campaigns', tbl => {
-        tbl.increments('campaign_id');
+        tbl.increments();
         tbl.integer('org_id')
             .unsigned()
             .notNullable()
-            .references('org_id')
+            .references('id')
             .inTable('organizations')
             .onDelete('RESTRICT')
             .onUpdate('CASCADE');
@@ -43,37 +43,23 @@ exports.up = function(knex) {
             .notNullable();
         tbl.integer('funding_goal')
             .notNullable();
-        tbl.date('deadline')
+        tbl.string('deadline')
             .notNullable();
-    })
-    .createTable('photos', tbl => {
-        tbl.increments('photo_id');
-        tbl.string('photo_name')
-            .unique();
-        tbl.string('url')
-            .notNullable()
-            .unique();
-        tbl.integer('campaign_id')
-            .unsigned()
-            .notNullable()
-            .references('campaign_id')
-            .inTable('campaigns')
-            .onDelete('RESTRICT')
-            .onUpdate('CASCADE');
+        tbl.string('image');
     })
     .createTable('donations', tbl => {
-        tbl.increments('donation_id');
+        tbl.increments();
         tbl.integer('user_id')
             .unsigned()
             .notNullable()
-            .references('user_id')
+            .references('id')
             .inTable('users')
             .onDelete('RESTRICT')
             .onUpdate('CASCADE')
         tbl.integer('campaign_id')
             .unsigned()
             .notNullable()
-            .references('campaign_id')
+            .references('id')
             .inTable('campaigns')
             .onDelete('RESTRICT')
             .onUpdate('CASCADE')
@@ -84,7 +70,6 @@ exports.up = function(knex) {
 
 exports.down = function(knex) {
   return knex.schema.dropTableIfExists('donations')
-            .dropTableIfExists('photos')
             .dropTableIfExists('campaigns')
             .dropTableIfExists('organizations')
             .dropTableIfExists('users');
