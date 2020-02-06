@@ -53,7 +53,7 @@ router.post('/login', (req, res) => {
 
                 users.findOrgById(user.id)
                     .then(org => {
-                        res.status(200).json({message: `Welcome ${user.username}!`, token, user_id: user.id, org_id: org.id });
+                        res.status(200).json({message: `Welcome ${user.username}!`, token, user_id: org.user_id, org_id: org.id });
                     })
                 
             } else {
