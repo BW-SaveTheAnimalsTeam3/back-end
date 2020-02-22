@@ -13,13 +13,11 @@ exports.up = function(knex) {
         tbl.string('org_name')
             .notNullable()
             .unique();
-        tbl.integer('user_id')
-            .unsigned()
+        tbl.string('location')
             .notNullable()
-            .references('id')
-            .inTable('users')
-            .onDelete('RESTRICT')
-            .onUpdate('CASCADE');
+        tbl.string('password')
+            .notNullable()
+
     })
     .createTable('campaigns', tbl => {
         tbl.increments();
