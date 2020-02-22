@@ -29,7 +29,9 @@ router.post('/register', (req, res) => {
 router.post('/register/organizations', (req, res) => {
     const orgCreds = req.body;
 
-    if (orgCreds.org_name && orgCreds.user_id){
+    const hash = bcrypt.hashSync(orgCreds.password, 12);
+    orgCreds.password = hash;
+    if (orgCreds.org_name && orgCreds.password && orgCreds.location){
         users.addOrg(orgCreds)
             .then(newOrg => {
                 res.status(201).json({org_id: newOrg});
