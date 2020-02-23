@@ -66,7 +66,7 @@ router.post('/login', (req, res) => {
 router.post('/organizations/login', (req, res) => {
     let {org_name, password} = req.body;
 
-    users.findBy({org_name})
+    users.findOrgBy({org_name})
         .first()
         .then(org => {
             if (org && bcrypt.compareSync(password, org.password)){
