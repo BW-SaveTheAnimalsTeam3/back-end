@@ -5,6 +5,7 @@ module.exports = {
     addOrg,
     findAll,
     findBy,
+    findOrgBy,
     findAllOrgs,
     findOrgById,
     removeUser,
@@ -25,6 +26,10 @@ function findAll(){
 
 function findBy(username){
     return db('users').where(username)
+}
+
+function findOrgBy(org_name){
+    return db('organizations').where(org_name)
 }
 
 function findAllOrgs(){

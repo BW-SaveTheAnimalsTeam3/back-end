@@ -63,6 +63,25 @@ router.post('/login', (req, res) => {
         });
 })
 
+router.post('/organizations/login', (req, res) => {
+    let {org_name, password} = req.body;
+
+    users.findBy({org_name})
+        .first()
+        .then(org => {
+            if (org && bcrypt.compareSync(password, org.password)){
+                const token = generateToken(org.id)
+
+                res.status(200).json({message: `Welcome ${org.org_name}!`, token, id: org.id });                
+            } else {
+                res.status(401).json({message: 'Invalid Credentials'})
+            }
+        })
+        .catch(error => {
+            res.status(500).json(error);
+        });
+})
+
 router.get('/', (req, res) => {
     users.findAll()
         .then(users => {
