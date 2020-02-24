@@ -53,7 +53,7 @@ router.post('/login', (req, res) => {
             if (user && bcrypt.compareSync(password, user.password)){
                 const token = generateToken(user.id)
 
-                res.status(200).json({username: `${user.username}!`, token, id: user.id });                
+                res.status(200).json({username: `${user.username}`, token, id: user.id });                
             } else {
                 res.status(401).json({message: 'Invalid Credentials'})
             }
@@ -72,7 +72,7 @@ router.post('/organizations/login', (req, res) => {
             if (org && bcrypt.compareSync(password, org.password)){
                 const token = generateToken(org.id)
 
-                res.status(200).json({organization: `${org.org_name}!`, token, id: org.id });                
+                res.status(200).json({organization: `${org.org_name}`, token, id: org.id });                
             } else {
                 res.status(401).json({message: 'Invalid Credentials'})
             }
