@@ -34,6 +34,7 @@ router.post('/register/organizations', (req, res) => {
     if (orgCreds.org_name && orgCreds.password && orgCreds.location){
         users.addOrg(orgCreds)
             .then(newOrg => {
+                const token = generateToken(newUser)
                 res.status(201).json({organization: orgCreds.org_name, token, org_id: newOrg[0]});
             })
             .catch(error => {
