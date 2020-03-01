@@ -37,7 +37,7 @@ function findAllOrgs(){
 }
 
 function findOrgById(id){
-    return db('organizations').where({user_id: id})
+    return db('organizations').where({id: id})
 }
 
 function removeUser(id){
