@@ -93,6 +93,18 @@ router.get('/', (req, res) => {
         })
 })
 
+router.get('/saved-campaigns', (req, res) => {
+    const { user_id } = req.body
+    
+    users.findSavedCampaigns( user_id )
+        .then(campaigns => {
+            res.status(201).json(campaigns)
+        })
+        .catch(error => {
+            res.status(500).json({ message: 'Failed to get saved campaigns'})
+        })
+})
+
 router.get('/organizations/', (req, res) => {
     users.findAllOrgs()
         .then(orgs => {
@@ -114,6 +126,7 @@ router.get('/organizations/:id', (req, res) => {
             res.status(500).json(error)
         })
 })
+
 
 router.delete('/:id', (req, res) => {
     const id = req.params.id

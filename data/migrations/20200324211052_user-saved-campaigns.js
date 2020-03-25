@@ -9,7 +9,7 @@ exports.up = function(knex) {
             .inTable('users')
             .onDelete('CASCADE')
             .onUpdate('CASCADE');
-        tbl.integer('user_id')
+        tbl.integer('campaign_id')
             .unsigned()
             .notNullable()
             .references('id')
