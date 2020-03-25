@@ -93,8 +93,8 @@ router.get('/', (req, res) => {
         })
 })
 
-router.get('/saved-campaigns', (req, res) => {
-    const { user_id } = req.body
+router.get('/saved-campaigns/:user_id', (req, res) => {
+    const user_id = req.params.user_id
     
     users.findSavedCampaigns( user_id )
         .then(campaigns => {
