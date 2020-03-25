@@ -9,6 +9,8 @@ module.exports = {
     findAllOrgs,
     findOrgById,
     findSavedCampaigns,
+    addSavedCampaign,
+    removeSavedCampaign,
     removeUser,
     removeOrg
 }
@@ -43,6 +45,14 @@ function findOrgById(id){
 
 function findSavedCampaigns(user_id){
     return db('user-saved-campaigns').where({ user_id: user_id })
+}
+
+function addSavedCampaign(campaign){
+    return db('user-saved-campaigns').insert(campaign)
+}
+
+function removeSavedCampaign(id){
+    return db('user-saved-campaigns').where({ id }).del()
 }
 
 function removeUser(id){

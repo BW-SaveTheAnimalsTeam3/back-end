@@ -105,6 +105,30 @@ router.get('/saved-campaigns', (req, res) => {
         })
 })
 
+router.post('/saved-campaigns', (req, res) => {
+    const campaign = req.body
+
+    users.addSavedCampaign(campaign)
+        .then(campaign_info => {
+            res.status(201).json(campaign_info)
+        })
+        .catch(error => {
+            res.status(500).json({ message: 'Failed to add campaign'})
+        })
+})
+
+router.delete('/saved-campaigns/:id', (req, res) => {
+    const id = req.params.id
+
+    users.removeSavedCampaign(id)
+        .then(campaign => {
+            res.status(201).json(campaign)
+        })
+        .catch(error => {
+            res.status(500).json({ message: 'Failed to delete campaign'})
+        })
+})
+
 router.get('/organizations/', (req, res) => {
     users.findAllOrgs()
         .then(orgs => {
