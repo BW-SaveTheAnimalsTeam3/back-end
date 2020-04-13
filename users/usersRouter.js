@@ -29,19 +29,20 @@ router.post('/register', (req, res) => {
 router.post('/register/organizations', (req, res) => {
     const orgCreds = req.body;
 
-    const hash = bcrypt.hashSync(orgCreds.password, 12);
-    orgCreds.password = hash;
+    
     if (orgCreds.org_name && orgCreds.password && orgCreds.location){
+        const hash = bcrypt.hashSync(orgCreds.password, 12);
+        orgCreds.password = hash;
         users.addOrg(orgCreds)
             .then(newOrg => {
                 const token = generateToken(newOrg)
                 res.status(201).json({organization: orgCreds.org_name, token, org_id: newOrg[0]});
             })
             .catch(error => {
-                res.status(500).json(error);
+                res.status(409).json({ errorMessage: `${orgCreds.org_name} already exists` });
             })
     } else {
-        res.status(400).json({errorMessage: 'organization name and user_id are required'})
+        res.status(400).json({errorMessage: 'organization name, password, and location are required'})
     }
 })
 
