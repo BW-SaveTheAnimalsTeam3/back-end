@@ -11,6 +11,7 @@ router.post('/register', (req, res) => {
 
     const hash = bcrypt.hashSync(creds.password, 12);
     creds.password = hash;
+    
     if (creds.username && creds.password){
         users.add(creds)
             .then(newUser => {
@@ -56,11 +57,11 @@ router.post('/login', (req, res) => {
 
                 res.status(200).json({username: `${user.username}`, token, id: user.id });                
             } else {
-                res.status(401).json({message: 'Invalid Credentials'})
+                res.status(401).json({errorMessage: 'Invalid Credentials'})
             }
         })
         .catch(error => {
-            res.status(500).json(error);
+            res.status(403).json({errorMessage: 'Invalid Credentials'});
         });
 })
 
