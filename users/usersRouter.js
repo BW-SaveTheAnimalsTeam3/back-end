@@ -9,10 +9,9 @@ const router = express.Router();
 router.post('/register', (req, res) => {
     const creds = req.body;
 
-    const hash = bcrypt.hashSync(creds.password, 12);
-    creds.password = hash;
-    
     if (creds.username && creds.password){
+        const hash = bcrypt.hashSync(creds.password, 12);
+        creds.password = hash;
         users.add(creds)
             .then(newUser => {
                 const token = generateToken(newUser)
@@ -20,7 +19,7 @@ router.post('/register', (req, res) => {
                 res.status(201).json({username: creds.username, token, user_id: newUser[0]});
                 })
                 .catch(error => {
-                    res.status(500).json(error);
+                    res.status(409).json({errorMessage: `${creds.username} already exists`});
                 })
     } else {
         res.status(400).json({ errorMessage: 'username and password are required'})
